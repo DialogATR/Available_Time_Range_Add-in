@@ -1,0 +1,39 @@
+
+    <h3 class="h3Title">Business Days to Search:</h3>
+  <div class="radioStyle">
+  <input id="radio1-red" class="ms-ChoiceField-input" type="radio" name="radio1" checked="checked" (click)="click(2)">
+  <label for="radio1-red" class="ms-ChoiceField-field">
+    <span class="ms-Label">3 days</span>
+  </label>
+
+  <input id="radio1-green" class="ms-ChoiceField-input" type="radio" name="radio1" (click)="click(5)">
+  <label for="radio1-green" class="ms-ChoiceField-field">
+    <span class="ms-Label">5 days</span>
+  </label>
+
+  <input id="radio1-blue" class="ms-ChoiceField-input" type="radio" name="radio1" (click)="click(10)">
+  <label for="radio1-blue" class="ms-ChoiceField-field">
+    <span class="ms-Label">10 days</span>
+  </label>
+</div>
+<div class="radioStyle">
+  <input id="radio1-yellow" class="ms-ChoiceField-input" type="radio" name="radio1" (click)="click(true)">
+  <label for="radio1-yellow" class="ms-ChoiceField-field">
+    <span class="ms-Label">Custom</span>
+  </label>
+</div>
+<!-- Date Picker Code-->
+<div *ngIf="!this.hideDate">
+  <div [formGroup]="datePickerForm">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker1" placeholder="Start Date" formControlName="startDate" [(ngModel)]="datePickerStartDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker2" placeholder="End Date" formControlName="endDate" [(ngModel)]="datePickerEndDate">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>

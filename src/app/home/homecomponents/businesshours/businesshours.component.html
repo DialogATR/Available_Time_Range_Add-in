@@ -1,0 +1,26 @@
+<h3 class="h3Title">Business Hours:</h3>
+<p class="bizText">Choose which hours in a day to search between</p>
+<div class="inputStyle">
+  <label for="age">Start:
+
+    <input class="ms-TextField-field" type="time" name="age" id="age" min="0" step="15" value="08:00" #businessStart (blur)="click(businessStart.value, businessEnd.value)">
+
+  </label>
+</div>
+
+<div class="inputStyle">
+  <label for="age">End:
+
+    <input class="ms-TextField-field" type="time" name="age" id="age" min="0" step="15" value="17:00" #businessEnd (blur)="click(businessStart.value, businessEnd.value)">
+
+  </label>
+</div>
+  <!-- Basic time input spinners -->
+  <!-- <p>Choose which hours in a day to search between</p>
+  <label>Start Time:
+    <input type="time" min="0" step="15" value="08:00">
+  </label>
+  
+  <label>End Time
+    <input type="time" min="0" step="15" value="17:00">
+  </label> -->

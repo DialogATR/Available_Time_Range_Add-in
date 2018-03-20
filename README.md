@@ -1,85 +1,141 @@
-# Microsoft Graph Connect Sample for Angular 4
+Available Time Range
+========
 
-## Table of contents
+The Available Time Range add-in is a Dialog internal project designed to save the user time when scheduling meetings. 
 
-* [Introduction](#introduction)
-* [Prerequisites](#prerequisites)
-* [Register the application](#register-the-application)
-* [Build and run the sample](#build-and-run-the-sample)
-* [Questions and comments](#questions-and-comments)
-* [Contributing](#contributing)
-* [Additional resources](#additional-resources)
+The add-in uses Microsoft's Graph service to retrieve the user's Outlook calendar events. The start and end times inbetween these events are calculated to return an array of free times, which are copied to the user's clipboard for pasting. The ATR add-in is available for use when composing a new email. 
 
-## Introduction
+Design Goals
+------------
 
-This sample shows how to connect an Angular 4 app to a Microsoft work or school (Azure Active Directory) or personal (Microsoft) account  using the Microsoft Graph API with the [Microsoft Graph JavaScript SDK](https://github.com/microsoftgraph/msgraph-sdk-javascript) to send an email. In addition, the sample uses the Office Fabric UI for styling and formatting the user experience.
+- Save time
+- Increase productivity
+- Reduce user effort
 
-![Microsoft Graph Connect sample screenshot](./readme-images/screenshot.png)
+About the Project
+----------------
 
-This sample uses the [Microsoft Authentication Library Preview for JavaScript (msal.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js) to get an access token.
+Start Date: 16th of February 2018
 
-## Prerequisites
+Project Type: Angular 5
 
-To use this sample, you need the following:
-* [Node.js](https://nodejs.org/). Node is required to run the sample on a development server and to install dependencies. 
-* [Angular CLI](https://github.com/angular/angular-cli)
-* Either a [Microsoft account](https://www.outlook.com) or [Office 365 for business account](https://msdn.microsoft.com/en-us/office/office365/howto/setup-development-environment#bk_Office365Account)
-
-## Register the application
-
-1. Sign into the [App Registration Portal](https://apps.dev.microsoft.com/) using either your personal or work or school account.
-
-2. Choose **Add an app**.
-
-3. Enter a name for the app, and choose **Create application**. 
-	
-   The registration page displays, listing the properties of your app.
-
-4. Copy the Application Id. This is the unique identifier for your app. 
-
-5. Under **Platforms**, choose **Add Platform**.
-
-6. Choose **Web**.
-
-7. Make sure the **Allow Implicit Flow** check box is selected, and enter *http://localhost:4200/* as the Redirect URI. 
-
-8. Choose **Save**.
-
-## Build and run the sample
-
-1. Using your favorite IDE, open **configs.ts** in *src/app/shared*.
-
-2. Replace the **ENTER_YOUR_CLIENT_ID** placeholder value with the application ID of your registered Azure application.
-
-3. In a command prompt, run the following command in the root directory: `npm install`. This installs project dependencies, including the [HelloJS](http://adodson.com/hello.js/) client-side authentication library and the [Microsoft Graph JavaScript SDK](https://github.com/microsoftgraph/msgraph-sdk-javascript).
-  
-4. Run `npm start` to start the development server.
-
-5. Navigate to [http://localhost:4200/](http://localhost:4200/) in your web browser.
-
-6. Choose the **Sign in with your Microsoft account** button.
-
-7. Sign in with your personal or work or school account and grant the requested permissions.
-
-8. Click the **Write to Excel** button. Verify that the rows have been added to the **demo.xslx** file that you uploaded to your root OneDrive folder.
+XML manifest version: 1.0
 
 
-## Contributing
+Important Points
+---------------
+The 'CalendarView' API is primarily used to achieve the above. User's can alter the range of times retrieved by the request using the user interface.
 
-If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.md).
+The CalendarView request is located in 'home.service.ts': 
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+.api('/me/calendarview?startdatetime=' + moment.utc(startParse.source._value).subtract(9.5, 'hours').format() + '&enddatetime=' + moment.utc(endParse.source._value).subtract(9.5, 'hours').format() + '&$top=1000')
 
-## Questions and comments
+**note** the start time and end times are subtracted by 9.5. This is to convert the default returned format, UTC, to Darwin time. Also, the element '&$top=1000' defines how many events to return, the default being 10.
 
-We'd love to get your feedback about this sample. You can send your questions and suggestions in the [Issues](https://github.com/microsoftgraph/angular4-connect-sample/issues) section of this repository.
+Installation
+------------
 
-Questions about Microsoft Graph development in general should be posted to [Stack Overflow](https://stackoverflow.com/questions/tagged/microsoftgraph). Make sure that your questions or comments are tagged with [microsoftgraph].
-  
-## Additional resources
+Currently there are two ways to install this add-in and we're still experimenting with both.
 
-- [Other Microsoft Graph Connect samples](https://github.com/MicrosoftGraph?utf8=%E2%9C%93&query=-Connect)
-- [Microsoft Graph](https://developer.microsoft.com/en-us/graph/)
+<b>1. Request Office administration to add account to add-in user group (preferred)</b>
 
-## Copyright
-Copyright (c) 2017 Microsoft. All rights reserved.
+This option is faster to carry out and also means multiple users can be added at once. This process involves contacting the Dialog IT Office administrator (Conan_lastName@dialog.com.au)(?) and requesting the desired user email account(s) to be added to the valid user group for the ATR add-in. The ATR add-in will now appear on the 'Message' tab of the 'New Email' ribbon as a clickable button.
+
+<b>2. Manual installation (not recommended)</b>
+
+This option is not preferred because it requires the user(s) Office account to be elevated to a higher license (E3), which are valuable and limited in supply. This is necessary because lower licences (E1) cannot add custom Outlook add-ins. Contact the Dialog IT Office administrator (Conan_lastName@dialog.com.au)(?) and specify the user email accounts to be elevated to E3 licenses. <b>After completing this step a reinstallation of Office 365 is required.</b> 
+
+To add the add-in:
+
+      1. Open Outlook 2016 (desktop client).
+      2. Click 'Store' on the 'Home' ribbon.
+      3. On the left navigation panel click 'My add-ins'.
+      4. Under 'Custom add-ins' click the drop down 'Add a custom add-in' and choose 'Add from file'.
+      5. Navigate to 'P:\PROJECTS\Dialog Internal Projects\2018 Calendar Available Time\3. Joint Documents'.
+      6. Select 'atr-manifest.xml' and press 'Open'.
+      7. The ATR add-in will now appear on the 'Message' tab of the 'New Email' ribbon as a clickable button.
+
+To uninstall the add-in:
+
+      1. Open Outlook 2016 (desktop client).
+      2. Click 'Store' on the 'Home' ribbon.
+      3. On the left navigation panel click 'My add-ins'.
+      4. Under 'Custom add-ins' click the 3 dots on the add-in.
+      5. Click 'Remove'.
+
+Using the add-in
+----------------
+
+      1. Open a New Email.
+      2. Click the ATR add-in which appears on the 'Message' tab of the 'New Email' ribbon.
+      3. Click 'Connect' to connect to the Microsoft Graph service.
+      4. If it's your first time using the add-in in this Outlook session, log in is required.
+      5. Accept any permissions necessary and supply Dialog credientials when prompted.
+      
+To use the default parameters:
+      
+      1. Click the 'Get Meeting Availability' button.
+      2. Paste your message into the email body using 'CTRL + V' or 'right click + paste'.
+      
+Adjusting the parameters:
+
+      1. The first set of parameters (business days) will adjust the range of days for which to return events. 
+      The request currently ignores weekend events.
+      2. Next, input the length (in minutes) of meeting required.
+      3. Do the same for Buffer Time, which is a period (in minutes) which is applied before and after the 
+      Meeting Duration, to allow for travel and setup times.
+      4. Lastly, configure the Business Hours parameters, which control for what times to return meeting times. 
+      5. Click the 'Get Meeting Availability' button.
+      6. Paste your message into the email body using 'CTRL + V' or 'right click + paste'.
+
+Contribute
+----------
+
+This project is hosted on Dialog IT's internal Git. Navigate to 'http://otwdwndevsql01.devnet.dg.internal/Git/' and supply your company credentials. The current project is 'ATR1'.
+
+To clone the repository, copy 'http://otwdwndevsql01.devnet.dg.internal/Git/ATR1.git' into SourceTree or your Git client of choice. Ensure the command 'npm install' is run (VS Code Integrated Terminal), to install the project's node package modules.
+
+Use 'Npm run start' to compile the project and navigate to 'https://localhost:4200/' in your browser to view the add-in.
+
+Deploying
+---------
+
+To deploy the project a few changes need to be made beforehand:
+
+    1. Navigate to 'protractor.conf.js' and uncomment the github Url and comment the localhost Url. Save.
+    2. Navigate to 'auth.service.ts' and uncomment the github Url and comment the localhost Url. Save.
+    3. Navigate to 'configs.ts' and uncomment the production appId and comment the development appId. Save.
+    
+(Undo these changes to return to development)
+    
+    4. Run 'ng build --prod' in the Integrated Terminal (VS Code) to create a minified version of the project 
+    in a folder called 'dist'. 
+    5. Run 'ngh' to push the 'dist' folder and your new changes to the GitHub Pages hosting service.
+    
+Navigate to 'https://jacksilburn.github.io/ATR2/' to view the add-in in-browser.
+
+**note** If changes are made to the 'atr-manifest.xml' file in the root directory:
+
+    1. Contact the Dialog IT Office administrator, who will circulate the changes to the add-in user group.
+    
+    (if install option 1 was used)
+    
+or
+    
+    2. Distribute the new manifest to the users and request they reinstall the add-in in Outlook 2016 
+    
+    (if install option 2 was used).
+    
+Support
+-------
+
+If you are having issues, please let us know.
+
+Contributors:
+Jack_Silburn@dialog.com.au,
+Rhys_Haydon@dialog.com.au
+
+Project Manager:
+David_Bradley@dialog.com.au
+
+Thank you and enjoy the add-in!

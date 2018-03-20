@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+body{
+    margin-right: 0;
+}
+
+.ms-Grid-col{
+    padding-left:0px;
+}
+
+.ms-Grid-row{
+    margin: 0px 0px;
+}
+
+.h3Title{
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.inputStyle{
+    width: 50%;
+    float: left;
+}
+
+.ms-Button{
+    width:100%;
+    border-radius: 4px;
+    padding: 12.5px;
+    height: 200%;
+}
+.atrButton{
+    width: 100%;
+    border-radius: 4px;
+    max-width: 300px;
+}
+
+.radioStyle{
+    margin-right: 10px;
+    float: left;
+}
+
+.mat-form-field{
+    width: 43%;
+    float: left;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.ms-TextField-field {
+    width: 75px;
+    min-width: 0px;
+
+}
+
+.meeting{
+    width: 163px;
+    float: left;
+}
+
+.meetingInput{
+    margin-bottom: 5px;
+}
+
+.buffer{
+    width: 133px;
+    float: left;
+}
+
+.bufferInput{
+    margin-bottom: 5px;
+}
+
+.bizText{
+    margin: 5px 0px;
+}
+
+p.ms-font-m.ms-fontColor-green {
+    margin: 0px;
+}
+
+/*
+.testing{
+    margin: 5px;
+} */
+
+p{
+margin-top: 0px;
+}

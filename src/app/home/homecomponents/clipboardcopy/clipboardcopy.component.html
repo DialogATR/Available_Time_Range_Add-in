@@ -1,0 +1,30 @@
+<!-- <script type = "text/javascript" src="/src/clipboard.js"></script> -->
+<!-- <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script> -->
+ <!-- <script type="text/javascript" src="/src/clipboard.js"></script> -->
+
+<!-- <button class="ms-Button atrButton" type="button" (click)="outputText()">Copy to Clipboard</button> -->
+<!-- <button class="ms-Button" type="button" onclick="setItemBody()">Paste to Mail</button> -->
+
+<div id='editableDiv' contenteditable='true' [hidden]="true"></div>
+
+<script>
+
+    document.addEventListener('paste', function (e) {
+
+        e.preventDefault();
+
+        var pastedText = this.timeArrayString
+
+        if (window.clipboardData && window.clipboardData.getData) { // IE
+
+            pastedText = window.clipboardData.getData('Text');
+
+        } else if (e.clipboardData && e.clipboardData.getData) {
+
+            pastedText = e.clipboardData.getData('text/html');
+
+        }
+
+        document.getElementById('target').innerHTML = pastedText
+    });
+</script>

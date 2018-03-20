@@ -1,0 +1,62 @@
+<div class="ms-ChoiceField ms-ChoiceFieldGroup">
+    <div class="ms-Grid-row">
+        <div class="container">
+            <!-- App main content markup. -->
+            <!-- Date Range Row -->
+            <div class="ms-Grid-row">
+                <div class="ms-Grid-col ms-sm12">
+                    <app-daterange #daterange (datePicked)='onDatePicked($event)' (datepickerPicked)='onDatePickerPicked($event)'></app-daterange>
+                </div>
+            </div>
+
+            <div class="ms-Grid-row">
+
+                <app-meetingduration (durationPicked)='onDurationPicked($event)'></app-meetingduration>
+
+                <app-buffertime (bufferPicked)='onBufferPicked($event)'></app-buffertime>
+
+            </div>
+        </div>
+
+        <!-- Business Hours Row -->
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-sm12">
+                <app-businesshours (businessPicked)='onBusinessPicked($event)'></app-businesshours>
+            </div>
+        </div>
+
+        <app-clipboardcopy #clipboard [finalArray]="finalArray"></app-clipboardcopy>
+
+        <br>
+
+        <div class="ms-Grid-row">
+            <button class="ms-Button atrButton" (click)='daterange.dateEmit(); onSendMail()'>
+                <span class="ms-Button-label">Get Available Times</span>
+            </button>
+        </div>
+
+        <br>
+
+        <div class="ms-Grid-row" [hidden]="true">
+            <button class="ms-Button atrButton" id="copyButton" (click)='onCopy(); clipboard.copy()'>
+                <span class="ms-Button-label">Copy To Clipboard</span>
+            </button>
+        </div>
+
+
+        <div [hidden]="!this.emailSent">
+            <p class="ms-font-m ms-fontColor-green">Meeting Times Copied to Clipboard</p>
+        </div>
+
+        <div [hidden]="!this.error">
+            <p class="ms-font-m ms-fontColor-red">{{this.errorMessage}}</p>
+        </div>
+
+        <div [hidden]="this.emailSent || this.error">
+            <mat-spinner></mat-spinner>
+        </div>
+    </div>
+</div>
+<!--<div [hidden]="!this.copied">
+                <p class="ms-font-m ms-fontColor-green">Text successfully copied!</p>
+            </div> -->
